@@ -4,6 +4,8 @@ import { auth } from '../../firebase.init';
 
 const SignUp = () => {
 
+    const [success, setSuccess] = useState(false);
+
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleSignUp = (event) => {
@@ -16,16 +18,23 @@ const SignUp = () => {
         // reset error and status 
         setErrorMessage('');
 
-        
+        if(password.length < 6) {
+            setErrorMessage("Password should be 6 characters or longer");
+            return;
+        }
+
+
 
         // create user with email and password 
         createUserWithEmailAndPassword(auth, email, password)
         .then(result => {
             console.log(result.user);
+            setSuccess(true);
         })
         .catch(error => {
             console.log("ERROR", error.message);
             setErrorMessage(error.message)
+            setSuccess(false);
         })
 
     }
@@ -56,6 +65,10 @@ const SignUp = () => {
 
             {
                 errorMessage && <p className='text-red-600'>{errorMessage}</p>
+            }
+
+            {
+                success && <p className='text-green-600'>Sign up is Successful.</p>
             }
 
           </div>
