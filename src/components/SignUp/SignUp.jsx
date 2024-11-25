@@ -24,6 +24,14 @@ const SignUp = () => {
         }
 
 
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{6,}$/;
+
+        if(!passwordRegex.test(password)){
+           setErrorMessage('At least one uppercase, one lowercase, one number, one special character');
+           return;
+        }
+
+
 
         // create user with email and password 
         createUserWithEmailAndPassword(auth, email, password)
